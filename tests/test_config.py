@@ -7,7 +7,6 @@ def assert_config_creation(data=None):
     assert config is not None
     assert config.kafka is not None
     assert config.data_broker is not None
-    assert config.auth is not None
     assert config.device_manager is not None
     assert config.dojot is not None
     return config
@@ -35,9 +34,6 @@ def assert_services_config(config):
     assert "url" in config.data_broker
     assert "timeout_sleep" in config.data_broker
     assert "connection_retries" in config.data_broker
-    assert "url" in config.auth
-    assert "timeout_sleep" in config.auth
-    assert "connection_retries" in config.auth
     assert "url" in config.device_manager
     assert "timeout_sleep" in config.device_manager
     assert "connection_retries" in config.device_manager
@@ -67,8 +63,6 @@ def assert_extra_kafka_config(config):
 def assert_extra_services_config(config):
     assert "extra-dbroker" in config.data_broker
     assert "data-dbroker" == config.data_broker["extra-dbroker"]
-    assert "extra-auth" in config.auth
-    assert "data-auth" == config.auth["extra-auth"]
     assert "extra-device-manager" in config.device_manager
     assert "data-device-manager" == config.device_manager["extra-device-manager"]
 
@@ -106,13 +100,7 @@ def test_custom_config():
             "timeout_sleep": 5,
             "connection_retries": 3,
             "extra-dbroker": "data-dbroker"
-        },
-        "auth": {
-            "url": "localhost:5000",
-            "timeout_sleep": 5,
-            "connection_retries": 3,
-            "extra-auth": "data-auth"
-        },
+        }
         "device_manager": {
             "url": "http://device-manager:5000",
             "timeout_sleep": 5,
@@ -155,7 +143,6 @@ def test_env_config():
     os.environ["KAFKA_GROUP_ID"] = "local-kafka"
     os.environ['DATA_BROKER_URL'] = "http://local-data-broker"
     os.environ['DEVICE_MANAGER_URL'] = "http://local-device-manager"
-    os.environ['AUTH_URL'] = "http://local-auth"
     os.environ['KEYCLOAK_URL'] = "http://local-keycloak:8080/auth/"
     os.environ['KEYCLOAK_USER'] = "sample-user"
     os.environ['KEYCLOAK_PASSWORD'] = "sample-password"
@@ -193,11 +180,6 @@ def test_env_config():
             "timeout_sleep": 5,
             "connection_retries": 3,
         },
-        "auth": {
-            "url": "http://local-auth",
-            "timeout_sleep": 5,
-            "connection_retries": 3
-        },
         "keycloak":{
             "timeout_sleep": 5,
             "connection_retries": 3,
@@ -229,7 +211,6 @@ def test_env_config():
 
     config = assert_config_creation()
     assert config.kafka == data["kafka"]
-    assert config.auth == data["auth"]
     assert config.device_manager == data["device_manager"]
     assert config.data_broker == data["data_broker"]
     assert config.dojot == data["dojot"]
