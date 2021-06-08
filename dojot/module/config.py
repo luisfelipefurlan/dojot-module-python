@@ -62,7 +62,7 @@ class Config:
                 "keycloak" = {
                     "timeout_sleep": 5,
                     "connection_retries": 3,
-                    "base_path": "http://apigw:8000/auth/",
+                    "base_path": "http://keycloak:8080/auth",
                     "ignore_realm": "master",
                     "credentials": {
                         "username": "admin",
