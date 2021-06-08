@@ -62,7 +62,7 @@ class Config:
                 "keycloak" = {
                     "timeout_sleep": 5,
                     "connection_retries": 3,
-                    "base_path": "http://keycloak:8080/auth",
+                    "base_path": "http://keycloak:8080/auth/",
                     "ignore_realm": "master",
                     "credentials": {
                         "username": "admin",
@@ -159,7 +159,7 @@ class Config:
                 "timeout_sleep": 5
                 "connection_retries": 3
             keycloak:
-                "base_path": "http://keycloak:8080/auth"
+                "base_path": "http://keycloak:8080/auth/"
                 "timeout_sleep": 5
                 "connection_retries": 3
                 "ignore_realm": "master",
@@ -229,7 +229,7 @@ class Config:
             "timeout_sleep": 5,
             "connection_retries": 3,
             "ignore_realm": "master",
-            "base_path": "http://keycloak:8080/auth",
+            "base_path": "http://keycloak:8080/auth/",
             "credentials": {
                 "username": "admin",
                 "password": "admin",
