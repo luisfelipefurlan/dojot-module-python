@@ -159,7 +159,7 @@ class Config:
                 "timeout_sleep": 5
                 "connection_retries": 3
             keycloak:
-                "base_path": "http://apigw:8000/auth"
+                "base_path": "http://keycloak:8080/auth"
                 "timeout_sleep": 5
                 "connection_retries": 3
                 "ignore_realm": "master",
@@ -229,7 +229,7 @@ class Config:
             "timeout_sleep": 5,
             "connection_retries": 3,
             "ignore_realm": "master",
-            "base_path": "http://apigw:8000/auth/",
+            "base_path": "http://keycloak:8080/auth",
             "credentials": {
                 "username": "admin",
                 "password": "admin",
@@ -268,7 +268,6 @@ class Config:
         - ``DOJOT_KAFKA_POLL_TIMEOUT``: Time to wait for new messages in Kafka.
         - ``DATA_BROKER_URL``: Where DataBroker service can be reached.
         - ``DEVICE_MANAGER_URL``: URL to reach the device-manager service.
-        - ``AUTH_URL``: Where Auth service can be reached.
         - ``KEYCLOAK_URL``: Where Keycloak service can be reached.
         - ``KEYCLOAK_USER``: Keycloak user (this user must have permission to list realms).
         - ``KEYCLOAK_PASSWORD``: Keycloak user password.
