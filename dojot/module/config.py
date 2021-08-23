@@ -59,17 +59,10 @@ class Config:
                     "timeout_sleep": 5,
                     "connection_retries": 3
                 },
-                "keycloak" = {
+                "auth" : {
+                    "url": "http://auth:5000",
                     "timeout_sleep": 5,
-                    "connection_retries": 3,
-                    "base_path": "http://keycloak:8080/auth/",
-                    "ignore_realm": "master",
-                    "credentials": {
-                        "username": "admin",
-                        "password": "admin",
-                        "client_id": "admin-cli",
-                        "grant_type": "password",
-                    }
+                    "connection_retries": 3
                 },
                 "dojot" : {
                     "management": {
@@ -102,27 +95,23 @@ class Config:
         if config is not None:
             if "kafka" in config:
                 if "consumer" in config["kafka"]:
-                    self.kafka["consumer"] = {
-                        **self.kafka["consumer"], **config["kafka"]["consumer"]}
+                    self.kafka["consumer"] = {**self.kafka["consumer"] , **config["kafka"]["consumer"]}
                 if "producer" in config["kafka"]:
-                    self.kafka["producer"] = {
-                        **self.kafka["producer"], **config["kafka"]["producer"]}
+                    self.kafka["producer"] = {**self.kafka["producer"] , **config["kafka"]["producer"]}
                 if "dojot" in config["kafka"]:
-                    self.kafka["dojot"] = {
-                        **self.kafka["dojot"], **config["kafka"]["dojot"]}
+                    self.kafka["dojot"] = {**self.kafka["dojot"] , **config["kafka"]["dojot"]}
             if "data_broker" in config:
-                self.data_broker = {
-                    **self.data_broker, **config["data_broker"]}
+                self.data_broker = {**self.data_broker, **config["data_broker"]}
             if "device_manager" in config:
-                self.device_manager = {
-                    **self.device_manager, **config["device_manager"]}
+                self.device_manager = {**self.device_manager, **config["device_manager"]}
+            if "auth" in config:
+                self.auth = {**self.auth, **config["auth"]}
             if "dojot" in config:
                 if "management" in config["dojot"]:
-                    self.dojot["management"] = {
-                        **self.dojot["management"], **config["dojot"]["management"]}
+                    self.dojot["management"] = {**self.dojot["management"], **config["dojot"]["management"]}
                 if "subjects" in config["dojot"]:
-                    self.dojot["subjects"] = {
-                        **self.dojot["subjects"], **config["dojot"]["subjects"]}
+                    self.dojot["subjects"] = {**self.dojot["subjects"], **config["dojot"]["subjects"]}
+
 
     def load_defaults(self):
         '''
@@ -158,16 +147,10 @@ class Config:
                 url: "http://device-manager:5000"
                 "timeout_sleep": 5
                 "connection_retries": 3
-            keycloak:
-                "base_path": "http://keycloak:8080/auth/"
-                "timeout_sleep": 5
-                "connection_retries": 3
-                "ignore_realm": "master",
-                "credentials":
-                    "username": "admin",
-                    "password": "admin",
-                    "client_id": "admin-cli",
-                    "grant_type": "password"
+            auth:
+                url: "http://auth:5000"
+                timeout_sleep: 5
+                connection_retries: 3
             dojot:
                 management:
                     user: "dojot-management"
@@ -225,17 +208,10 @@ class Config:
             "connection_retries": 3
         }
 
-        self.keycloak = {
+        self.auth = {
+            "url": "http://auth:5000",
             "timeout_sleep": 5,
-            "connection_retries": 3,
-            "ignore_realm": "master",
-            "base_path": "http://keycloak:8080/auth/",
-            "credentials": {
-                "username": "admin",
-                "password": "admin",
-                "client_id": "admin-cli",
-                "grant_type": "password",
-            }
+            "connection_retries": 3
         }
 
         self.dojot = {
@@ -268,10 +244,7 @@ class Config:
         - ``DOJOT_KAFKA_POLL_TIMEOUT``: Time to wait for new messages in Kafka.
         - ``DATA_BROKER_URL``: Where DataBroker service can be reached.
         - ``DEVICE_MANAGER_URL``: URL to reach the device-manager service.
-        - ``KEYCLOAK_URL``: Where Keycloak service can be reached.
-        - ``KEYCLOAK_USER``: Keycloak user (this user must have permission to list realms).
-        - ``KEYCLOAK_PASSWORD``: Keycloak user password.
-        - ``KEYCLOAK_CLIENT_ID``: Keycloak client id.
+        - ``AUTH_URL``: Where Auth service can be reached.
         - ``DOJOT_MANAGEMENT_TENANT``: tenant to be used when asking
           DataBroker for management topics (such as tenancy-related topics)
         - ``DOJOT_MANAGEMENT_USER``: user to be used when asking
@@ -306,14 +279,7 @@ class Config:
         self.device_manager["url"] = os.environ.get(
             'DEVICE_MANAGER_URL', self.device_manager["url"])
 
-        self.keycloak["base_path"] = os.environ.get(
-            "KEYCLOAK_URL", self.keycloak["base_path"])
-        self.keycloak["credentials"]["username"] = os.environ.get(
-            "KEYCLOAK_USER", self.keycloak["credentials"]["username"])
-        self.keycloak["credentials"]["password"] = os.environ.get(
-            "KEYCLOAK_PASSWORD", self.keycloak["credentials"]["password"])
-        self.keycloak["credentials"]["client_id"] = os.environ.get(
-            "KEYCLOAK_CLIENT_ID", self.keycloak["credentials"]["client_id"])
+        self.auth["url"] = os.environ.get('AUTH_URL', self.auth["url"])
 
         self.dojot["management"]["user"] = os.environ.get(
             'DOJOT_MANAGEMENT_USER', self.dojot["management"]["user"])

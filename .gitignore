@@ -106,6 +106,9 @@ venv.bak/
 # VSCode project folder
 .vscode
 
+# WebStorm project folder
+.idea/
+
 # Pipenv files
 Pipfile*
 
